@@ -1,8 +1,13 @@
 require('dotenv').config()
+const express = require('express');
+const authMiddleware = require('../middlewares/auth');
 const UserSchema = require("../models/UserSchema")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const SECRET = process.env.SECRET;
+const router = express.Router();
+
+router.use(authMiddleware);
 
 function generateToken(params = {}) {
     return jwt.sign(params, SECRET, {

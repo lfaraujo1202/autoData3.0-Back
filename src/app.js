@@ -11,14 +11,14 @@ const courseRoutes = require('./routes/courseRoutes')
 const projectRoutes = require('./routes/projectRoutes')
 const authMiddleware = require('./middlewares/auth')
 
-db.connect() 
+db.connect()
 app.use(cors())
 app.use(express.json())
 app.use(morgan("dev"))
 app.use("/user", userRoutes)
 app.use("/courses", courseRoutes)
 app.use("/project", projectRoutes)
-app.use(authMiddleware);
+
 
 // teste API
 app.get('/', (req, res) => {

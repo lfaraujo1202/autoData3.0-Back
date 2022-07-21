@@ -2,10 +2,10 @@ const jwt = require('jsonwebtoken');
 const SECRET = process.env.SECRET;
 
 module.exports = (req, res, next) => {
-    const authHeader = req.headers.authorization;
+    const authHeader = req.headers.authorization;  
 
     if(!authHeader)
-        return res.status(401).send({ error: 'Token is missing'});
+        return res.status(401).send({ error: 'Token is missing2'});
 
     const parts = authHeader.split(' ');
 
