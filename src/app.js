@@ -23,7 +23,7 @@ app.use("/password-reset", passwordResetRoutes);
 
 // teste API
 app.get('/', (req, res) => {
-    res.status(200).json({msg: 'Teste API!'})
+    res.status(200).json({msg: 'Teste API v3!'})
 })
 
 module.exports = app
