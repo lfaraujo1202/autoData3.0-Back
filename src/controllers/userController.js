@@ -33,7 +33,7 @@ const checkId = async (req, res) => {
          return res.status(404).json({ msg: 'Usuário não encontrado'})
     }
 
-    function checkToken(req, res, next) {
+    function changePassword(req, res, next) {
         const authHeader = req.headers['authorization']
         const token = authHeader && authHeader.split(" ")[1]
 
