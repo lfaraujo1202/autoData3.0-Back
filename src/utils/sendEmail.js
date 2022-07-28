@@ -10,11 +10,11 @@ const path = require('path');
 const sendEmail = async (email, subject, text) => {
     try {
         var transporter = nodemailer.createTransport({
-            host: 'smtp.mailtrap.io',
+            host: HOST,
             port: 2525,
             auth: {
-                user: 'ab36063887b21d',
-                pass: 'aa1ad5807f5d3e',
+                user: USER,
+                pass: PASS,
             },
         });
 
@@ -25,7 +25,7 @@ const sendEmail = async (email, subject, text) => {
         // }))
 
         await transporter.sendMail({
-            from: "luizfelipe@msn.com",
+            from: USER,
             to: email,
             subject: subject,
             text: text,
