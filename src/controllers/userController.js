@@ -182,7 +182,84 @@ const login = async (req, res) => {
             msg: 'Erro encontrado, tente novamente mais tarde!',
         })
     }
+}
 
+
+const getAllClasses = async (req, res) => {
+
+    UserSchema.aggregate(
+        [
+          {
+            $group: {
+              _id: null,
+              sum_val:{$sum:"$level"}
+            }
+          }
+        ],
+        function(err, lvlSum) {
+          if (err) {
+            res.send(err);
+          } else {
+            res.json(lvlSum);
+          }
+        }
+      );
+}
+
+const getCounteUsers = async (req, res) => {
+    UserSchema.count({}, function (err, userCounts){
+        res.status(200).json({userCounts})
+    })
+}
+
+const getAllProgressLevel = async (req, res) => {
+    UserSchema.aggregate(
+        [
+        { $unwind: "$progress" },
+          {
+            $group: {
+              _id: null,
+              sum_val:{$sum:"$progress.level"}
+            }
+          }
+        ],
+        function(err, lvlSum) {
+          if (err) {
+            res.send(err);
+          } else {
+            res.json(lvlSum);
+          }
+        }
+      );
+}
+
+const getAllProgressCourses = async (req, res) => {
+    UserSchema.aggregate(
+        [
+        { $unwind: "$progress" },
+          {
+            $project: {
+              _id: null,
+              sum_val: {
+                $cond: [{$eq:["$progress.progress" , "100%"]}, 1, 0]
+            }
+            }
+          },
+          {
+            $group: {
+                _id: null,
+                lvlsum: { $sum: "$sum_val" }
+            }
+          }
+        ],
+        function(err, lvlSum) {
+          if (err) {
+            res.send(err);
+          } else {
+            res.json(lvlSum);
+          }
+        }
+      );
 }
 
 const updateUserById = async (req, res) => {
@@ -244,6 +321,10 @@ const deleteUserById = async (req, res) => {
 } 
 
 module.exports = {
+    getAllClasses,
+    getCounteUsers,
+    getAllProgressLevel,
+    getAllProgressCourses,
     getAll,
     checkId,
     createUser,
